@@ -1,18 +1,17 @@
 
 import React from 'react';
 import { ViewState, User } from '../types';
-import { ArrowRight, Bell, Zap, QrCode, Users, AlertTriangle, TrendingUp, Calendar, ShieldCheck } from 'lucide-react';
+import { Bell, QrCode, Users, AlertTriangle, TrendingUp, ShieldCheck } from 'lucide-react';
 
 interface DashboardProps {
   setView: (view: ViewState) => void;
   currentUser: User;
 }
 
-export const Dashboard: React.FC<DashboardProps> = ({ setView, currentUser }) => {
+export const Dashboard: React.FC<DashboardProps> = ({ setView }) => {
   const currentDate = new Date().toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long' });
 
-  // Render Admin / Superadmin Dashboard
-  if (currentUser.role === 'admin' || currentUser.role === 'superadmin') {
+
     return (
       <div className="space-y-8 pb-24 md:pb-8">
          <div className="flex justify-between items-end">
@@ -90,7 +89,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ setView, currentUser }) =>
 
            <button 
              onClick={() => setView(ViewState.UTILITIES)}
-             className="group bg-white text-slate-900 border border-slate-200 p-8 rounded-3xl shadow-sm flex flex-col items-start justify-between min-h-[160px] hover:shadow-xl hover:border-slate-300 transition-all duration-300"
+             className="group bg-white text-slate-900 border border-slate-200 p-8 rounded-3xl shadow-sm flex flex-col items-start justify-between min-h-40 hover:shadow-xl hover:border-slate-300 transition-all duration-300"
            >
              <div className="p-3 bg-blue-50 text-blue-600 rounded-2xl mb-4 group-hover:scale-110 transition-transform">
                <TrendingUp size={28} />
@@ -118,8 +117,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ setView, currentUser }) =>
         )} */}
       </div>
     );
-  }
-
+  
   // Resident Dashboard
   // return (
   //   <div className="space-y-8 pb-24 md:pb-8">

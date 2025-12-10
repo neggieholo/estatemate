@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { Home, Zap, ShieldCheck, MessageSquare, Calendar, Users, ChevronDown, LogOut, Menu } from 'lucide-react';
-import { ViewState, User, Role } from '../types';
+import { Home, Zap, ShieldCheck, MessageSquare, Calendar, Users, ChevronDown, LogOut, Inbox, MoreHorizontal, FileText} from 'lucide-react';
+import { ViewState , User} from '../types';
 
 interface NavigationProps {
   currentView: ViewState;
@@ -18,16 +18,15 @@ export const Navigation: React.FC<NavigationProps> = ({ currentView, setView, cu
     const items = [
       { id: ViewState.DASHBOARD, label: 'Home', icon: Home },
       // { id: ViewState.UTILITIES, label: currentUser.role === 'resident' ? 'Bills' : 'Billing', icon: Zap },
-      { id: ViewState.UTILITIES, label: 'Billing', icon: Zap },
+      { id: ViewState.UTILITIES, label: 'Bills', icon: Zap },
       // { id: ViewState.ACCESS, label: currentUser.role === 'resident' ? 'Access' : 'Security', icon: ShieldCheck },
+      { id: ViewState.INVOICES, label: 'Invoices', icon: FileText },
       { id: ViewState.ACCESS, label: 'Security', icon: ShieldCheck },
       { id: ViewState.FORUM, label: 'Community', icon: MessageSquare },
       { id: ViewState.EVENTS, label: 'Events', icon: Calendar },
+      { id: ViewState.USERS, label: 'Residents', icon: Users },
+      { id: ViewState.REQUESTS, label: 'Requests', icon: Inbox},
     ];
-
-    // if (currentUser.role === 'superadmin') {
-    //   items.push({ id: ViewState.USERS, label: 'Users', icon: Users });
-    // }
 
     return items;
   };

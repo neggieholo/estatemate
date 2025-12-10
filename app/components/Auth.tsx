@@ -17,7 +17,8 @@ export const Auth: React.FC<AuthProps> = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [unit, setUnit] = useState('');
+  const [city, setCity] = useState('');
+  const [town, setTown] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +30,7 @@ export const Auth: React.FC<AuthProps> = ({ onLogin }) => {
             const user = await db.authenticate(email, password);
             onLogin(user);
         } else {
-            const user = await db.register(name, email, password, unit);
+            const user = await db.register(name, email, password, city, town);
             onLogin(user);
         }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -106,7 +107,7 @@ export const Auth: React.FC<AuthProps> = ({ onLogin }) => {
             {!isLogin && (
               <>
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-1.5 ml-1">Full Name</label>
+                  <label className="block text-sm font-bold text-slate-700 mb-1.5 ml-1">Estate Name</label>
                   <div className="relative">
                     <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                     <input
@@ -116,20 +117,6 @@ export const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                       onChange={(e) => setName(e.target.value)}
                       className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-100 text-slate-900 text-sm rounded-2xl focus:ring-4 focus:ring-indigo-50 focus:border-indigo-500 block transition-all outline-none font-medium"
                       placeholder="John Doe"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-1.5 ml-1">Unit Number</label>
-                  <div className="relative">
-                    <Home className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
-                    <input
-                      type="text"
-                      required
-                      value={unit}
-                      onChange={(e) => setUnit(e.target.value)}
-                      className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-100 text-slate-900 text-sm rounded-2xl focus:ring-4 focus:ring-indigo-50 focus:border-indigo-500 block transition-all outline-none font-medium"
-                      placeholder="A-402"
                     />
                   </div>
                 </div>
@@ -166,6 +153,40 @@ export const Auth: React.FC<AuthProps> = ({ onLogin }) => {
               </div>
             </div>
 
+            {!isLogin && (
+              <>
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-1.5 ml-1">City</label>
+                  <div className="relative">
+                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                    <input
+                      type="text"
+                      required
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-100 text-slate-900 text-sm rounded-2xl focus:ring-4 focus:ring-indigo-50 focus:border-indigo-500 block transition-all outline-none font-medium"
+                      placeholder="lagos City..."
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-1.5 ml-1">Town</label>
+                  <div className="relative">
+                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                    <input
+                      type="text"
+                      required
+                      value={town}
+                      onChange={(e) => setTown(e.target.value)}
+                      className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-100 text-slate-900 text-sm rounded-2xl focus:ring-4 focus:ring-indigo-50 focus:border-indigo-500 block transition-all outline-none font-medium"
+                      placeholder="Isolo..."
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+            
             {isLogin && (
               <div className="flex items-center justify-between">
                 <div className="flex items-start">

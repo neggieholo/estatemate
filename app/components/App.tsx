@@ -1,25 +1,21 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Navigation } from './Navigation';
 import { Dashboard } from './Dashboard';
 import { Utilities } from './Utilities';
 import { AccessControl } from './AccessControl';
 import { Forum } from './Forum';
 import { Events } from './Events';
-import { UserManagement } from './UserManagement';
+import TenantManagement from './TenantManagement';
 import { Auth } from './Auth';
-import { ViewState, User, Role } from '../types';
-import { db } from '../services/database';
+import { ViewState, User } from '../types';
+import JoinRequestsPage from './JoinRequestPage';
+import { InvoicesPage } from './Invoices';
 
 export default function App() {
   const [currentView, setView] = useState<ViewState>(ViewState.DASHBOARD);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    // Initialize the mock database on first load
-    db.init();
-  }, []);
 
   const handleLogin = (user: User) => {
     setCurrentUser(user);
@@ -56,6 +52,8 @@ export default function App() {
         return <Dashboard setView={setView} currentUser={currentUser} />;
       case ViewState.UTILITIES:
         return <Utilities currentUser={currentUser} onUpdateUser={handleUpdateUser} />;
+      case ViewState.INVOICES:
+        return <InvoicesPage currentUserId={currentUser.id}/>;
       case ViewState.ACCESS:
         return <AccessControl currentUser={currentUser} />;
       case ViewState.FORUM:
@@ -63,7 +61,9 @@ export default function App() {
       case ViewState.EVENTS:
         return <Events currentUser={currentUser} />;
       case ViewState.USERS:
-        return currentUser.role === 'superadmin' ? <UserManagement /> : <Dashboard setView={setView} currentUser={currentUser} />;
+        return <TenantManagement /> ;
+      case ViewState.REQUESTS:
+        return <JoinRequestsPage /> ;
       default:
         return <Dashboard setView={setView} currentUser={currentUser} />;
     }
