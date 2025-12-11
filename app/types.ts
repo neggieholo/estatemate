@@ -77,6 +77,22 @@ export enum ViewState {
   REQUESTS = 'requests'
 }
 
+// Types
+export type BillItem = {
+  id: string;
+  name: string;
+  description?: string;
+  amount: number;
+  billing_cycle: "monthly" | "one_time";
+  due_day?: number;
+  invoice_type: "automatic" | "manual";
+  generation_day?: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+
 export interface Tenant {
   id: string;
   estate_id: string;
@@ -141,18 +157,25 @@ export interface InvoiceWithTenant extends Invoice {
   };
 }
 
-export interface GeneralInvoice {
+export interface EstateInvoice {
   id: string;
-  bill_id: string | null;       // null for one-off invoices
-  bill_name: string | null;
-  description: string | null;
-  total_amount: number;
-  invoice_date: string;         // YYYY-MM-DD
+  bill_id: string | null;               // Can be null for one-off invoices
+  bill_name: string | null;             // From billable_items.name
+  total_amount: number;                  // From billable_items.amount
+  supplier_name: string;                 // From estate_invoices
+  calculation_method: 'EQUAL' | 'BY_UNIT_TYPE' | 'BY_CONSUMPTION' | 'BY_SQUARE_METER' | 'CUSTOM_FORMULA';
+  period_start: string | null;          // YYYY-MM-DD
+  period_end: string | null;            // YYYY-MM-DD
+  attachment_image_path?: string | null;
+  attachment_pdf_path?: string | null;
+  notes?: string | null;
   created_at: string;
   updated_at: string;
-  created_by: string;
-  created_by_name: string | null;
+  created_by: string | null;            // estate_admin_users.id
+  created_by_name?: string | null;      // estate_admin_users.name
 }
+
+
 
 
 

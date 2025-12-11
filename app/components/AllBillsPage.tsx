@@ -1,40 +1,10 @@
 import { useState, useEffect } from "react";
+import { BillItem } from "../types";
+import { fetchBills } from "../utils/invoices";
 
-// Types
-type Bill = {
-  id: string;
-  name: string;
-  description?: string;
-  amount: number;
-  billing_cycle: "monthly" | "one_time";
-  due_day?: number;
-  invoice_type: "automatic" | "manual";
-  generation_day?: number;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
-};
+
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
-// API Functions
-// Fetch all bills
-const fetchBills = async (): Promise<Bill[]> => {
-  const res = await fetch(`${baseUrl}/bills`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: 'include'
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch bills");
-  }
-
-  const data = await res.json();
-  return data.bills;
-};
 
 // Delete a bill
 const deleteBill = async (id: string) => {
@@ -55,7 +25,7 @@ const deleteBill = async (id: string) => {
 };
 
 // Update a bill
-const updateBill = async (id: string, body: Partial<Bill>) => {
+const updateBill = async (id: string, body: Partial<BillItem>) => {
   const res = await fetch(`${baseUrl}/bills/${id}`, {
     method: "PUT",
     headers: {
@@ -79,7 +49,7 @@ type BillRegistrationFormProps = {
 
 // Component
 export default function BillsList({ setView}: BillRegistrationFormProps) {
-  const [bills, setBills] = useState<Bill[]>([]);
+  const [bills, setBills] = useState<BillItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -100,7 +70,7 @@ export default function BillsList({ setView}: BillRegistrationFormProps) {
     loadBills();
   }, []);
 
-  const handleToggleActive = async (bill: Bill) => {
+  const handleToggleActive = async (bill: BillItem) => {
   try {
     const res = await fetch(`${baseUrl}/bills/${bill.id}/toggle`, {
       method: "PUT",
@@ -162,11 +132,11 @@ export default function BillsList({ setView}: BillRegistrationFormProps) {
               Amount: ₦{bill.amount.toLocaleString()}
             </p>
             <p className="text-gray-700 dark:text-gray-200">
-              Billing: {bill.billing_cycle}, Invoice: {bill.invoice_type}
+              Billing: {bill.billing_cycle}
             </p>
             {bill.billing_cycle === "monthly" && (
               <p className="text-gray-700 dark:text-gray-200">
-                Due Day: {bill.due_day}, Generation Day: {bill.generation_day || "-"}
+                Due Day: {bill.due_day}
               </p>
             )}
           </div>

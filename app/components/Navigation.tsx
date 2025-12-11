@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Home, Zap, ShieldCheck, MessageSquare, Calendar, Users, ChevronDown, LogOut, Inbox, MoreHorizontal, FileText} from 'lucide-react';
+import { Home, Zap, ShieldCheck, MessageSquare, Calendar, Users, ChevronDown, LogOut, Inbox, FileText, User2} from 'lucide-react';
 import { ViewState , User} from '../types';
 
 interface NavigationProps {
@@ -105,7 +105,7 @@ export const Navigation: React.FC<NavigationProps> = ({ currentView, setView, cu
             className="flex items-center space-x-3 px-3 py-3 w-full rounded-2xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100 group"
           >
             <div className="relative">
-                <img src={currentUser.avatar} alt="User" className="w-11 h-11 rounded-full border-2 border-white shadow-md object-cover ring-2 ring-slate-50" />
+               <User2/>
                 <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full"></div>
             </div>
             <div className="flex flex-col items-start flex-1 min-w-0">
