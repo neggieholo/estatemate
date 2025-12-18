@@ -30,8 +30,7 @@ export const Auth: React.FC<AuthProps> = ({ onLogin }) => {
             const user = await db.authenticate(email, password);
             onLogin(user);
         } else {
-            const user = await db.register(name, email, password, city, town);
-            onLogin(user);
+             await db.register(name, email, password, city, town);
         }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {

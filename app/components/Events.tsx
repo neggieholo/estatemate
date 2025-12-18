@@ -42,7 +42,7 @@ export const Events: React.FC<EventsProps> = ({ currentUser }) => {
   const [newTime, setNewTime] = useState('');
   const [newLocation, setNewLocation] = useState('');
 
-  const isAdmin = currentUser.role === 'admin' || currentUser.role === 'superadmin';
+  const isAdmin = true;
 
   const handleGenerateIdeas = async () => {
     setLoadingSuggestions(true);

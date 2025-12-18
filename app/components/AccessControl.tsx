@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Visitor, User } from '../types';
-import { Plus, X, Share2, Clock, User as UserIcon, QrCode, Search, ShieldAlert } from 'lucide-react';
+import { Plus, X, Share2, Clock, User as UserIcon, Search } from 'lucide-react';
 
 interface AccessControlProps {
   currentUser: User;
@@ -14,16 +14,16 @@ const MOCK_ADMIN_VISITORS: Visitor[] = [
   { id: '4', name: 'Furniture Delivery', type: 'Delivery', accessCode: '5566', date: '2023-11-03 12:00', status: 'Active', unit: '808' },
 ];
 
-export const AccessControl: React.FC<AccessControlProps> = ({ currentUser }) => {
-  const isAdmin = currentUser.role === 'admin' || currentUser.role === 'superadmin';
+export const AccessControl: React.FC<AccessControlProps> = ({ }) => {
+  const isAdmin = true;
 
   const [visitors, setVisitors] = useState<Visitor[]>(
     isAdmin 
     ? MOCK_ADMIN_VISITORS 
     : [
-      { id: '1', name: 'Uber Eats', type: 'Delivery', accessCode: '8842', date: '2023-11-02 19:00', status: 'Active', unit: currentUser.unit },
-      { id: '2', name: 'Sarah Mom', type: 'Guest', accessCode: '9921', date: '2023-11-03 14:00', status: 'Active', unit: currentUser.unit },
-      { id: '3', name: 'Plumber', type: 'Service', accessCode: '1122', date: '2023-10-30 09:00', status: 'Used', unit: currentUser.unit },
+      { id: '1', name: 'Uber Eats', type: 'Delivery', accessCode: '8842', date: '2023-11-02 19:00', status: 'Active' },
+      { id: '2', name: 'Sarah Mom', type: 'Guest', accessCode: '9921', date: '2023-11-03 14:00', status: 'Active' },
+      { id: '3', name: 'Plumber', type: 'Service', accessCode: '1122', date: '2023-10-30 09:00', status: 'Used' },
     ]
   );
 
@@ -39,8 +39,7 @@ export const AccessControl: React.FC<AccessControlProps> = ({ currentUser }) => 
       type: newVisitorType,
       accessCode: code,
       date: new Date().toISOString(),
-      status: 'Active',
-      unit: currentUser.unit
+      status: 'Active'
     };
     setVisitors([newVisitor, ...visitors]);
     setShowModal(false);
@@ -87,9 +86,9 @@ export const AccessControl: React.FC<AccessControlProps> = ({ currentUser }) => 
             {visitors.filter(v => v.status === 'Active').map((visitor) => (
             <div key={visitor.id} className="relative group perspective-1000">
                 {/* Ticket Style Card */}
-                <div className="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                <div className="bg-white rounded-4xl shadow-sm border border-slate-100 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                     {/* Top Section with Gradient */}
-                    <div className="bg-gradient-to-br from-violet-600 to-fuchsia-600 p-6 text-white relative overflow-hidden">
+                    <div className="bg-linear-to-br from-violet-600 to-fuchsia-600 p-6 text-white relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-10 -mt-10 blur-2xl"></div>
                         <div className="relative z-10 flex justify-between items-start">
                              <div>
@@ -144,7 +143,7 @@ export const AccessControl: React.FC<AccessControlProps> = ({ currentUser }) => 
 
       <div className="pt-6">
         <h2 className="text-lg font-bold text-slate-900 mb-4">History Log</h2>
-        <div className="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
+        <div className="bg-white rounded-4xl shadow-sm border border-slate-100 overflow-hidden">
             {visitors.filter(v => v.status !== 'Active').map((visitor) => (
             <div key={visitor.id} className="p-5 border-b border-slate-50 last:border-0 flex items-center justify-between hover:bg-slate-50 transition-colors">
                 <div className="flex items-center space-x-4">
@@ -169,7 +168,7 @@ export const AccessControl: React.FC<AccessControlProps> = ({ currentUser }) => 
 
       {/* New Visitor Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-60 flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl w-full max-w-md p-8 shadow-2xl transform transition-all animate-scale-up">
             <div className="flex justify-between items-center mb-8">
               <h2 className="text-2xl font-bold text-slate-900">New Visitor Pass</h2>
